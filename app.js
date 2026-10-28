@@ -68,14 +68,14 @@ var deleteTask=function(){
 
 var taskCompleted=function(){    
     var listItem=this.parentNode;
-    completedTasksHolder.appendChild(listItem);
-    bindTaskEvents(listItem, taskIncomplete);
+    completedTasksHolder.appendChild(listItem);    
+    this.onchange = taskIncomplete;
 }
 
 var taskIncomplete=function(){
     var listItem=this.parentNode;
-    incompleteTaskHolder.appendChild(listItem);
-    bindTaskEvents(listItem,taskCompleted);
+    incompleteTaskHolder.appendChild(listItem);    
+    this.onchange = taskCompleted;
 }
 
 addButton.addEventListener("click",addTask);
