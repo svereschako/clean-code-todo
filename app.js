@@ -40,7 +40,7 @@ var addTask=function(){
     if (!taskInput.value) return;
     var listItem=createNewTaskElement(taskInput.value);    
     incompleteTaskHolder.appendChild(listItem);
-    bindTaskEvents(listItem, taskCompleted);
+    bindTaskEvents(listItem, toggleState);
     taskInput.value="";
 }
 
@@ -66,16 +66,12 @@ var deleteTask=function(){
     ul.removeChild(listItem);
 }
 
-var taskCompleted=function(){    
-    var listItem=this.parentNode;
-    completedTasksHolder.appendChild(listItem);    
-    this.onchange = taskIncomplete;
-}
-
-var taskIncomplete=function(){
-    var listItem=this.parentNode;
-    incompleteTaskHolder.appendChild(listItem);    
-    this.onchange = taskCompleted;
+var toggleState = function() {
+    var listItem = this.parentNode;
+    if(listItem.parentNode.id == "incompleteTasks")
+        completedTasksHolder.appendChild(listItem);        
+    else
+        incompleteTaskHolder.appendChild(listItem);    
 }
 
 addButton.addEventListener("click",addTask);
@@ -91,9 +87,9 @@ var bindTaskEvents=function(taskListItem,checkBoxEventHandler){
 }
 
 for (var i=0; i<incompleteTaskHolder.children.length;i++){
-    bindTaskEvents(incompleteTaskHolder.children[i],taskCompleted);
+    bindTaskEvents(incompleteTaskHolder.children[i],toggleState);
 }
 
 for (var i=0; i<completedTasksHolder.children.length;i++){    
-    bindTaskEvents(completedTasksHolder.children[i],taskIncomplete);
+    bindTaskEvents(completedTasksHolder.children[i],toggleState);
 }
